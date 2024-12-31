@@ -83,19 +83,19 @@ async function main() {
   const provider = new JsonRpcProvider(RPC_URL);
 
   while (true) {
-    const { action } = await inquirer.prompt([
-      {
-        type: 'list',
-        name: 'action',
-        message: '选择一个操作:',
-        choices: [
-          { name: '查看余额', value: '0' },
-          { name: '领取 Fragmentz', value: '1' },
-          { name: '退出', value: '2' },
-        ],
-      },
-    ]);
-
+    // const { action } = await inquirer.prompt([
+    //   {
+    //     type: 'list',
+    //     name: 'action',
+    //     message: '选择一个操作:',
+    //     choices: [
+    //       { name: '查看余额', value: '0' },
+    //       { name: '领取 Fragmentz', value: '1' },
+    //       { name: '退出', value: '2' },
+    //     ],
+    //   },
+    // ]);
+    const action = '1';
     if (action === '2') {
       console.log('退出中...'.cyan);
       break;
@@ -133,32 +133,32 @@ async function main() {
           throw new Error('privateKeys.json 文件未正确设置或为空'.red);
         }
 
-        const numClaims = readlineSync.questionInt('您想领取多少个 Fragmentz? ');
+        const numClaims = 20
 
         console.log('');
 
         await claimProcess(privateKeys, provider, numClaims);
         console.log('\n初次领取完成。'.green);
 
-        const { claimOption } = await inquirer.prompt([
-          {
-            type: 'list',
-            name: 'claimOption',
-            message: '选择领取方式:',
-            choices: [
-              { name: '一次性领取', value: '1' },
-              { name: '每12小时定时领取', value: '2' },
-            ],
-          },
-        ]);
+        // const { claimOption } = await inquirer.prompt([
+        //   {
+        //     type: 'list',
+        //     name: 'claimOption',
+        //     message: '选择领取方式:',
+        //     choices: [
+        //       { name: '一次性领取', value: '1' },
+        //       { name: '每12小时定时领取', value: '2' },
+        //     ],
+        //   },
+        // ]);
 
-        if (claimOption === '2') {
+        // if (claimOption === '2') {
           await setupRecurringClaim(privateKeys, provider, numClaims);
           console.log(
             '机器人已设置为每12小时运行一次领取任务。'.green
           );
           break;
-        }
+        // }
       }
     } catch (error) {
       console.log(
